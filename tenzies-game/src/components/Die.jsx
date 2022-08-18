@@ -1,6 +1,6 @@
 import './Die.css'
 
-export default function Dice(props) {
+export default function Die(props) {
     
     return (
         <div className='dice'>{props.value}</div>
