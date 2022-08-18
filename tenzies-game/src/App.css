@@ -11,16 +11,43 @@ body{
   padding: 1.25rem;
   justify-content: center;
   align-items: center;
+  font-family: 'Karla', sans-serif;
 }
 
 
 main{
-  /* margin: 0 auto; */
   display: flex;
+  flex-direction: column;
   border-radius: 10px;
   align-items: center;
   justify-content: center;
   width: min(450px, 800px);
   height: min(450px, 800px);
-  background: white;
+  background: #F5F5F5;
+}
+
+.dice-container{
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  gap: 1.75rem;
+  margin: 2em 1em;
+}
+
+.roll-btn{
+  padding: 0.75em 2.75em;
+  border: none;
+  font-size: 1.2rem;
+  background-color: #5035FF;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Karla', sans-serif;
+}
+
+.roll-btn:focus {
+  outline: none;
+}
+
+.roll-btn:active {
+  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
 }
