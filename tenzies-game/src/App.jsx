@@ -1,10 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Die from './components/Die'
+import { nanoid } from 'nanoid'
+import Confetti from 'react-confetti'
 import './App.css'
-import {nanoid} from 'nanoid'
 
 function App() {
   const [dice, setDice] = useState(allNewDice())
+  const [tenzies, setTenzies] = useState(false)
+
+  useEffect(() => {
+    const allHeld = dice.every(die => die.isHeld);
+    const firstValue = dice[0].value
+    const allSameValue = dice.every(die => die.value === firstValue)
+    if (allHeld && allSameValue) {
+      setTenzies(true);
+    }
+  }, [dice])
 
   function generateNewDie() {
     return {
@@ -24,22 +35,31 @@ function App() {
   }
 
   function rollDice() {
-    setDice(prevState => {
-      return prevState.map(dice => {
-        return dice.isHeld ?
-          { ...dice } : generateNewDie()
+    if (!tenzies)
+    {
+      setDice(prevState => {
+        return prevState.map(dice => {
+          return dice.isHeld ?
+            { ...dice } : generateNewDie()
+        })
       })
-    })
-
-    // setDice(allNewDice())
+    }
+    else {
+      setDice(allNewDice());
+      setTenzies(false);
+    }
   }
 
   function holdDie(id) {
-    setDice(prevState => {
-      return prevState.map(die => {
-        return die.id === id ? {...die, isHeld: !die.isHeld} : die
+    const allHeld = dice.every(die => die.isHeld);
+
+    if (!allHeld) {
+      setDice(prevState => {
+        return prevState.map(die => {
+          return die.id === id ? {...die, isHeld: !die.isHeld} : die
+        })
       })
-    })
+    }
   }
 
   const diceElements = dice.map((die) => {
@@ -50,12 +70,13 @@ function App() {
 
   return (
     <main>
+    {tenzies && <Confetti/>}
       <h1 className='title'>Tenzies</h1>
       <p className='instructions'>Roll untill all dice are the same.  Click each die to hold at its current value between rolls.  </p>
       <div className='dice-container'>
         {diceElements}
       </div>
-      <button className='roll-btn' onClick={rollDice}>Roll</button>
+      <button className='roll-btn' onClick={rollDice}>{tenzies ? "New Game" : "Roll Dice"}</button>
     </main>
   )
 }

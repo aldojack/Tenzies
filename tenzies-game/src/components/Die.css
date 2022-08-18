@@ -5,6 +5,7 @@
     border-radius: 10px;
     box-shadow: 2px 1px 3px rgb(97, 93, 93);
     cursor: pointer;
+    width: 50px;
     font-weight: 600;
     background: white;
 }
